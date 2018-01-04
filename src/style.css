@@ -1,0 +1,125 @@
+body {
+    background:rgb(255,92,103);
+    //font-size: 100px;
+    transition: font-size;
+    transition-duration: 100ms;
+    color:blue;
+    margin: 0px;
+}
+
+canvas {
+	background-color: rgb(250, 250, 250);
+}
+
+.inputWrapper {
+	position: absolute;
+	top:20px;
+	left:20px;
+	background-color: rgba(0, 0, 0, 0.2);
+	border-radius: 5px;
+	padding:10px;
+}
+
+.inputWrapper input {
+
+	padding:25px 30px;
+	width: 215px;
+	margin-right: 10px;
+	font-size: 16px;
+	float:left;
+	border:2px lightgrey solid;
+	transition: width;
+	font-family: "Courier New";
+
+}
+
+.inputWrapper input.openUp {
+	width: 500px;
+	transition-duration: 200ms;
+}
+
+.inputWrapper input.closeUp {
+	transition-duration: 100ms;
+}
+
+.addLink {
+	float:left;
+	color:white;
+	padding:20px 25px;
+	font-size: 20px;
+	border-radius: 45px;
+	//box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.9);
+	background-color: black;
+	border: solid 5px lightgrey;
+	 -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+.addLink:hover {
+	background-color: rgb(255,92,103);
+	cursor: pointer;
+}
+
+.recentBoards {
+	position: absolute;
+	right:20px;
+	top:20px;
+	padding:20px 30px;
+	background-color: rgba(220, 220, 220, 0.9);
+	border: solid 2px rgba(0, 0, 0, 0.1);
+	color:black;
+	border-radius: 5px;
+	transition: border;
+	transition-duration: 100ms;
+}
+
+.recentBoards:hover {
+	border: solid 2px rgba(0, 0, 0, 0.5);
+	cursor:pointer;
+
+
+}
+
+.tooltip {
+	position: absolute;
+	top:100px;
+	left:100px;
+	background-color: rgb(255,92,103);
+	//text-decoration: underline;
+	color:blue;
+	border: solid 2px blue;
+	padding:10px 15px;
+	font-size: 20px;
+	border-radius: 45px;
+}
+
+.LinkConfigToolTip {
+	position: absolute;
+	top:100px;
+	left:100px;
+	background-color: rgb(0, 0, 255);
+	//text-decoration: underline;
+	color:rgb(255,92,103);
+	border: solid 2px rgb(255,92,103);
+	padding:10px 15px;
+	font-size: 15px;
+	border-radius: 45px;
+}
+
+.LinkConfigToolTip:hover {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.footer {
+	position: absolute;
+	color: black;
+	font-family: "Courier New";
+	left:20px;
+	bottom: 20px;
+}

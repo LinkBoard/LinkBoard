@@ -1,0 +1,46 @@
+{
+  "name": "LinkBoard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack --watch",
+    "start": "webpack-dev-server --open",
+    "build": "webpack",
+    "server": "node server.js",
+    "restful-server": "nodemon restfulServer.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "clean-webpack-plugin": "^0.1.17",
+    "css-loader": "^0.28.7",
+    "csv-loader": "^2.1.1",
+    "express": "^4.16.2",
+    "file-loader": "^1.1.5",
+    "html-webpack-plugin": "^2.30.1",
+    "nodemon": "^1.12.1",
+    "style-loader": "^0.19.0",
+    "webpack": "^3.9.1",
+    "webpack-dev-middleware": "^1.12.2",
+    "webpack-dev-server": "^2.9.5",
+    "xml-loader": "^1.2.1"
+  },
+  "dependencies": {
+    "@tweenjs/tween.js": "^17.1.1",
+    "cors": "^2.8.4",
+    "director": "^1.2.8",
+    "fetch": "^1.1.0",
+    "lodash": "^4.17.4",
+    "mongoose": "^4.13.6",
+    "navigo": "^6.0.0",
+    "node-fetch": "^1.7.3",
+    "three": "^0.88.0",
+    "three-dragcontrols": "^0.88.1",
+    "three-orthographic-trackball-controls": "^79.0.1",
+    "three-trackballcontrols": "0.0.7",
+    "three.trackball": "0.0.1"
+  }
+}
