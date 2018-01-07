@@ -20,6 +20,8 @@ import dataController from './dataController';
 
 function initPage(data, router) {
 
+	console.log("data", data);
+
 	document.body.appendChild(init(data));
 	controls = new THREE.OrthographicTrackballControls(camera, glRenderer.domElement)
 
@@ -44,7 +46,7 @@ function initPage(data, router) {
 	// console.log("LOAD NEW DATA, WITH HASH: " + data.hash);
 	dataController.listDBLinks(data.hash, function (linksList) {
 		for(const a in linksList) {
-			UI.showLink(glScene, camera, objects, glRenderer, data, linksList[a])
+			UI.showLink(glScene, camera, objects, glRenderer, data, linksList[a], a)
 		}
 	})
 }
@@ -123,7 +125,7 @@ function animate(time) {
 		intersects[i].object.material.color.set('rgb(0,0,255)');
 		var tooltipWidth = tooltip.offsetWidth;
 		var tooltipHeight = tooltip.offsetHeight;
-		tooltip.innerHTML = "↪ "+intersects[i].object.userData.url; // + " moved state:" + intersects[i].object.userData.hasBeenMoved ( DEBUG )
+		tooltip.innerHTML = "↪ "+intersects[i].object.userData.url;// + " moved state:" + intersects[i].object.userData.hasBeenMoved;// ( DEBUG )
 		tooltip.style.left = (mouseRelative.x - tooltipWidth / 2) + "px";
 		tooltip.style.top = (mouseRelative.y - tooltipHeight * 1.5) + "px";
 	}
@@ -188,6 +190,7 @@ function onMouseDown(event) {
 			
 			LinkConfigToolTip.style.display = 'block';
 			LinkConfigToolTip.setAttribute('data-linkObject', encodeURIComponent(JSON.stringify(intersects[0].object.userData.linkObject)));
+			LinkConfigToolTip.setAttribute('data-id', encodeURIComponent(JSON.stringify(intersects[0].object.userData.id)));
 			//console.log(intersects[0].object.userData.linkObject);
 			LinkConfigToolTip.style.left = (event.clientX + 20) + "px";
 			LinkConfigToolTip.style.top = (event.clientY - 20) + "px";
@@ -233,7 +236,7 @@ function onMouseClick( event ) {
 			newLinkObject.posX = intersects[0].object.position.x;
 			newLinkObject.posY = intersects[0].object.position.y;
 			
-			dataController.updateDBLink(newLinkObject, function(output) {
+			dataController.updateDBLink(newLinkObject, intersects[0].object.userData.id, function(output) {
 				//console.log('done: updated link', output);
 			});
 

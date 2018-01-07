@@ -7,13 +7,15 @@ var hash = '#'; // Defaults to: '#'
 var router = new Navigo(root, useHash, hash);
 import initLandingPage from './landingpage/landingpage';
 import page from './index';
-var backendHost = "https://linkboard-host.tnl.rndr.studio";// "http://localhost:3030";
+var backendHost = "https://linkboard-40e2e.firebaseio.com/";// "http://localhost:3030";
 
 router
 	.on({
 		'board/:id': function(params) {
 
-			fetch(backendHost+"/boards/"+params.id, {
+			console.log(params.id);
+
+			fetch(backendHost+"/boards/"+params.id+".json", {
 				method: 'GET',
 				headers: {
 					'Accept': 'application/json, text/plain, */*',
@@ -24,6 +26,7 @@ router
 			}).then(function(body) {
 
 				document.body.innerHTML = "";
+				body.hash = params.id;
 				page.initPage(body, router);
 
 			});
@@ -31,7 +34,7 @@ router
 		},
 		'new': function () {
 
-			fetch(backendHost+"/boards", {
+			fetch(backendHost+"/boards.json", {
 					method: 'POST',
 					headers: {
 						'Accept': 'application/json, text/plain, */*',
@@ -43,15 +46,17 @@ router
 					return res.json();
 				}).then(function(body) {
 
+					console.log(body);
+
 					var links = [];
 					var storedNames = JSON.parse(localStorage.getItem("links"));
 					if( storedNames !== null ) {
 						links = storedNames;
 					}
-					links.push( { name: body.name, hash:body.hash } );
+					links.push( { name: 'Set title', hash:body.name } );
 					localStorage.setItem("links", JSON.stringify(links));
 
-					router.navigate("/board/"+body.hash, false)
+					router.navigate("/board/"+body.name, false)
 			});
 		},
 		'': function() {

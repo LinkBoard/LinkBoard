@@ -1,10 +1,9 @@
 
-
-var backendHost = "https://linkboard-host.tnl.rndr.studio";// "http://localhost:3030";
+var backendHost = "https://linkboard-40e2e.firebaseio.com";// "http://localhost:3030";
 
 function listDBLinks(boardHash, callback) {
 
-	fetch(backendHost+"/boardlinks/"+boardHash, {
+	fetch(backendHost+'/links.json?orderBy="boardHash"&equalTo="'+boardHash+'"', {
 		method: 'GET',
 		headers: {
 			'Accept': 'application/json, text/plain, */*',
@@ -14,13 +13,16 @@ function listDBLinks(boardHash, callback) {
 		return res.json();
 	}).then(function(body) {
 		console.log("listDBLinks");
+
 		callback(body);
 	});
 }
 
 function updateBoard(boardObject, callback) {
+
+	console.log(boardObject);
 	
-	fetch(backendHost+"/boards/"+boardObject.hash, {
+	fetch(backendHost+"/boards/"+boardObject.hash+".json", {
 		method: 'PUT',
 		headers: {
 			'Accept': 'application/json, text/plain, */*',
@@ -52,7 +54,7 @@ function updateBoard(boardObject, callback) {
 
 function addDBLink(name, boardHash, url, posX, posY, callback) {
 
-	fetch(backendHost+"/links", {
+	fetch(backendHost+"/links.json", {
 		method: 'POST',
 		headers: {
 			'Accept': 'application/json, text/plain, */*',
@@ -61,16 +63,34 @@ function addDBLink(name, boardHash, url, posX, posY, callback) {
 		body: JSON.stringify( { name: name, boardHash: boardHash, url: url, posX:posX, posY:posY } )
 	})
 		.then(function(res) {
+
 			return res.json();
 		}).then(function(body) {
-			callback(body);
+
+			var linkId = body.name;
+
+			// GET
+			fetch(backendHost+"/links/"+body.name+".json", {
+				method: 'GET',
+				headers: {
+					'Accept': 'application/json, text/plain, */*',
+					'Content-Type': 'application/json'
+				},
+			})
+				.then(function(res) {
+					return res.json();
+				}).then(function(body) {
+					console.log(body);
+					callback(body, linkId);
+			});
+
 	});
 
 }
 
-function updateDBLink(newLinkObject, callback) {
+function updateDBLink(newLinkObject, id, callback) {
 
-	fetch(backendHost+"/links/"+newLinkObject._id, {
+	fetch(backendHost+"/links/"+id+".json", {
 		method: 'PUT',
 		headers: {
 			'Accept': 'application/json, text/plain, */*',
@@ -86,10 +106,9 @@ function updateDBLink(newLinkObject, callback) {
 
 }
 
-function removeDBLink(LinkObject, callback) {
-
-	console.log('remove link');
-	fetch(backendHost+"/links/"+LinkObject._id, {
+function removeDBLink(LinkObject, linkId, callback) {
+	
+	fetch(backendHost+"/links/"+linkId+".json", {
 		method: 'DELETE',
 		headers: {
 			'Accept': 'application/json, text/plain, */*',

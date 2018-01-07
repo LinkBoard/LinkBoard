@@ -64,9 +64,11 @@ export function initLinkConfigToolTip(objects, glScene) {
 
 		var LinkConfigToolTip = document.body.getElementsByClassName("LinkConfigToolTip")[0];
 		var linkObject = JSON.parse(decodeURIComponent(LinkConfigToolTip.getAttribute("data-linkObject")));
+		var linkId = JSON.parse(decodeURIComponent(LinkConfigToolTip.getAttribute("data-id")));
+		
 		LinkConfigToolTip.style.display = 'none';
 
-		dataController.removeDBLink(linkObject, function(output) {
+		dataController.removeDBLink(linkObject, linkId, function(output) {
 			// 	console.log('done: remove link', output);
 			for ( var i = 0; i < objects.length; i++ ) {
 				if(linkObject._id == objects[i].userData.linkObject._id) {
@@ -93,7 +95,6 @@ export function initRecentBoards(router) {
 	var toolTip = document.createElement("div");
 	toolTip.className = "recentBoards"
 	toolTip.innerHTML = "Recent visited boards";
-
 	toolTip.addEventListener( 'click', function () {
 		router.navigate('', false);
 	});
@@ -104,18 +105,17 @@ export function initRecentBoards(router) {
 export function initFooter() {
 	var toolTip = document.createElement("div");
 	toolTip.className = "footer"
-	toolTip.innerHTML = "<b>Controls</b><br/>Mouse click: open link<br/>Mouse wheel: zoom board<br/>Mouse drag: pan board or reposition link<br/>Mouse right-click: remove link";
-	toolTip.style.pointerEvents = 'none';
+	toolTip.innerHTML = "<b>Controls</b><br/>Mouse click: open link<br/>Mouse wheel: zoom board<br/>Mouse drag: pan board or reposition link<br/>Mouse right-click: remove link<br/><br/><b>About</b><br/>Github: <a target='_blank' href='https://github.com/LinkBoard/LinkBoard'>LinkBoard</a><br/><br/><b>Share your feedback and feature requests <a target='_blank' href='https://github.com/LinkBoard/LinkBoard/issues'>here</a></b>";
 	return toolTip;
 }
 
 function addLinkToScene(glScene, camera, objects, glRenderer, data, linkUrl) {
-	dataController.addDBLink("empty", data.hash, linkUrl, -500+Math.random()*1000, -500+Math.random()*1000, function(linkObject) {
-		showLink(glScene, camera, objects, glRenderer, data, linkObject);
+	dataController.addDBLink("empty", data.hash, linkUrl, -500+Math.random()*1000, -500+Math.random()*1000, function(linkObject, id) {
+		showLink(glScene, camera, objects, glRenderer, data, linkObject, id);
 	});
 }
 
-function showLink(glScene, camera, objects, glRenderer, data, linkObject) {
+function showLink(glScene, camera, objects, glRenderer, data, linkObject, id) {
 
 	var geometry = new THREE.CircleBufferGeometry( 15, 32 );
 	var material = new THREE.MeshBasicMaterial( { color: 'rgb(255,192,203)' } );
@@ -123,7 +123,7 @@ function showLink(glScene, camera, objects, glRenderer, data, linkObject) {
 	circle.position.x = linkObject.posX;
 	circle.position.y = linkObject.posY;
 	circle.position.z = 1000;
-	circle.userData = { url: linkObject.url, hasBeenMoved: false, linkObject: linkObject };
+	circle.userData = { url: linkObject.url, hasBeenMoved: false, linkObject: linkObject, id: id };
 
 	objects.push(circle);
 	glScene.add(circle);

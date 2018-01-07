@@ -20,6 +20,7 @@ canvas {
 	padding:10px;
 }
 
+
 .inputWrapper input {
 
 	padding:25px 30px;
@@ -122,4 +123,13 @@ canvas {
 	font-family: "Courier New";
 	left:20px;
 	bottom: 20px;
+}
+
+.about {
+	position: absolute;
+	color: black;
+	font-family: "Courier New";
+	bottom:20px;
+	right: 40px;
+	//text-align: right;
 }
