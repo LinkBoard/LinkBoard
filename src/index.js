@@ -114,7 +114,7 @@ function animate(time) {
 	var tooltip = document.body.getElementsByClassName("tooltip")[0];
 
 	for ( var i = 0; i < objects.length; i++ ) {
-		objects[i].material.color.set('rgb(255,92,103)');
+		objects[i].material.color.set('rgb(255,255,255)'); // 'rgb(255,92,103)'
 		if(tooltip) {
 			tooltip.style.display = 'none';
 		}

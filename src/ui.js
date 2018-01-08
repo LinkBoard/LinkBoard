@@ -117,8 +117,13 @@ function addLinkToScene(glScene, camera, objects, glRenderer, data, linkUrl) {
 
 function showLink(glScene, camera, objects, glRenderer, data, linkObject, id) {
 
-	var geometry = new THREE.CircleBufferGeometry( 15, 32 );
-	var material = new THREE.MeshBasicMaterial( { color: 'rgb(255,192,203)' } );
+	var texture = new THREE.TextureLoader().load( "https://ucygetfavicon.appspot.com/"+linkObject.url ); // /assets/favicons/favicon.ico
+	texture.wrapS = THREE.RepeatWrapping;
+	texture.wrapT = THREE.RepeatWrapping;
+	texture.repeat.set( 1, 1 );
+
+	var geometry = new THREE.CircleBufferGeometry( 16, 32 );
+	var material = new THREE.MeshBasicMaterial( { color: 'rgb(200,200,200)', map: texture } ); // 'rgb(255,192,203)'
 	var circle = new THREE.Mesh( geometry, material );
 	circle.position.x = linkObject.posX;
 	circle.position.y = linkObject.posY;
